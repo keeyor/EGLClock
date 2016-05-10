@@ -10,12 +10,20 @@ package com.ephstrophy.eglckock;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ConfigurationInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class EGLClockActivity extends Activity {
     /**
@@ -28,7 +36,7 @@ public class EGLClockActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        glSurfaceView = new GLSurfaceView(this);
+        glSurfaceView = new GLSurfaceView(this);    
 
         // Check if the system supports OpenGL ES 2.0.
         ActivityManager activityManager = 
@@ -55,6 +63,9 @@ public class EGLClockActivity extends Activity {
             
             // Assign our renderer.
             glSurfaceView.setRenderer(new EGLClockRenderer(this));
+
+            //MG: glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+
             rendererSet = true;
         } else {
             /*
@@ -85,14 +96,46 @@ public class EGLClockActivity extends Activity {
         if (rendererSet) {
             glSurfaceView.onPause();
         }
+        //MG: Pause TimeListener
+        if(TimeChangeReceiver!=null)
+            this.unregisterReceiver(TimeChangeReceiver);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        
+
+        //MG: Register TimeListener
+        // this.registerReceiver(TimeChangeReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
         if (rendererSet) {
             glSurfaceView.onResume();
         }
     }
+
+    //MG: Time Listener Action
+    private BroadcastReceiver TimeChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().compareTo(Intent.ACTION_TIME_TICK)==0)
+            {
+
+                Calendar calendar = new GregorianCalendar();
+                Date trialTime = new Date();
+                calendar.setTime(trialTime);
+                long hour = calendar.get(Calendar.HOUR);
+                long minute =  calendar.get(Calendar.MINUTE);
+                long second = calendar.get(Calendar.SECOND);
+
+                float mMinutes;
+                float mHour;
+                mMinutes = minute + second / 60.0f;
+                mHour = hour + mMinutes / 60.0f;
+
+                Log.d("EGL:", " mHour:" + mHour + " mMinutes:" + mMinutes);
+                if (rendererSet) {
+                    glSurfaceView.requestRender();
+                }
+            }
+        }
+    };
 }

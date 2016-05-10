@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <instant-run
     abi="x86"
-    api-level="22"
-    density="420dpi"
+    api-level="19"
+    density="xhdpi"
     format="7"
-    timestamp="1634506633316665" >
+    timestamp="1661879113645892" >
 
     <task
         name="javac"
-        duration="131" />
+        duration="66" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="53" />
+        duration="16" />
     <task
         name="verifier"
-        duration="16" />
+        duration="3" />
 
     <artifact
         location="C:\Users\Keeyor\AndroidStudioProjects\EGLClock\app\build\outputs\apk\app-debug.apk"
         type="MAIN" />
 
-    <build timestamp="1634506633316665" >
+    <build timestamp="1661879113645892" >
         <artifact
             location="C:\Users\Keeyor\AndroidStudioProjects\EGLClock\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
