@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Keeyor\AndroidStudioProjects\EGLClock\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="b3eb4d0f4051eba6f2e75a69d76911e9fadcaad7">
+        <dex dex="C:\Users\Keeyor\AndroidStudioProjects\EGLClock\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_de93935eb56348f6495d382d1b8780d3a2c56c52\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Keeyor\AndroidStudioProjects\EGLClock\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="31e2feee94ac120d3f1680ee147e251f81105b4b">
+        <dex dex="C:\Users\Keeyor\AndroidStudioProjects\EGLClock\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_592a70c33e4ddd8bfbce3bf932374f0ffad796ca\classes.dex" />
+    </item>
+
+</items>
