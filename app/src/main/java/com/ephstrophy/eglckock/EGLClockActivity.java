@@ -36,7 +36,7 @@ public class EGLClockActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        glSurfaceView = new GLSurfaceView(this);    
+        glSurfaceView = new GLSurfaceView(this);
 
         // Check if the system supports OpenGL ES 2.0.
         ActivityManager activityManager = 
