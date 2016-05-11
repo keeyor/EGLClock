@@ -97,8 +97,8 @@ public class EGLClockActivity extends Activity {
             glSurfaceView.onPause();
         }
         //MG: Pause TimeListener
-        if(TimeChangeReceiver!=null)
-            this.unregisterReceiver(TimeChangeReceiver);
+       // if(TimeChangeReceiver!=null)
+       //     this.unregisterReceiver(TimeChangeReceiver);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class EGLClockActivity extends Activity {
     }
 
     //MG: Time Listener Action
-    private BroadcastReceiver TimeChangeReceiver = new BroadcastReceiver() {
+   /* private BroadcastReceiver TimeChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().compareTo(Intent.ACTION_TIME_TICK)==0)
@@ -137,5 +137,5 @@ public class EGLClockActivity extends Activity {
                 }
             }
         }
-    };
+    };*/
 }

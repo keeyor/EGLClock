@@ -4,29 +4,37 @@
     api-level="19"
     density="xhdpi"
     format="7"
-    timestamp="1661879113645892" >
+    timestamp="1740380620894396"
+    verifier="COMPATIBLE" >
 
     <task
         name="javac"
-        duration="66" />
+        duration="101" />
     <task
         name="instant-run-dex"
-        duration="0" />
+        duration="673" />
     <task
         name="instant-run-transform"
-        duration="16" />
+        duration="12" />
     <task
         name="verifier"
         duration="3" />
 
     <artifact
-        location="C:\Users\Keeyor\AndroidStudioProjects\EGLClock\app\build\outputs\apk\app-debug.apk"
-        type="MAIN" />
+        location="C:\Users\Keeyor\AndroidStudioProjects\EGLClock\app\build\intermediates\reload-dex\debug\classes.dex"
+        type="RELOAD_DEX" />
 
-    <build timestamp="1661879113645892" >
+    <build timestamp="1740345822975849" >
         <artifact
             location="C:\Users\Keeyor\AndroidStudioProjects\EGLClock\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
+    </build>
+    <build
+        timestamp="1740380620894396"
+        verifier="COMPATIBLE" >
+        <artifact
+            location="C:\Users\Keeyor\AndroidStudioProjects\EGLClock\app\build\intermediates\reload-dex\debug\classes.dex"
+            type="RELOAD_DEX" />
     </build>
 
 </instant-run>
