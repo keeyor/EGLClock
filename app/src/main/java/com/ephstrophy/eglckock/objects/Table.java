@@ -7,19 +7,24 @@
  * Visit http://www.pragmaticprogrammer.com/titles/kbogla for more book information.
 ***/
 package com.ephstrophy.eglckock.objects;
+import android.opengl.Matrix;
+
 import static android.opengl.GLES20.GL_TRIANGLE_FAN;
 import static android.opengl.GLES20.glDrawArrays;
 import static com.ephstrophy.eglckock.Constants.BYTES_PER_FLOAT;
 
 import com.ephstrophy.eglckock.data.VertexArray;
 import com.ephstrophy.eglckock.programs.TextureShaderProgram;
+import com.ephstrophy.eglckock.util.MatrixHelper;
 
 public class Table {            
     private static final int POSITION_COMPONENT_COUNT = 2;
     private static final int TEXTURE_COORDINATES_COMPONENT_COUNT = 2;
     private static final int STRIDE = (POSITION_COMPONENT_COUNT 
         + TEXTURE_COORDINATES_COMPONENT_COUNT) * BYTES_PER_FLOAT;
-    
+
+
+
     private static final float[] VERTEX_DATA = {
         // Order of coordinates: X, Y, S, T
 
@@ -38,6 +43,9 @@ public class Table {
     }
     
     public void bindData(TextureShaderProgram textureProgram) {
+
+
+
         vertexArray.setVertexAttribPointer(
             0, 
             textureProgram.getPositionAttributeLocation(), 

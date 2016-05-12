@@ -32,6 +32,8 @@ public class EGLClockActivity extends Activity {
     private GLSurfaceView glSurfaceView;
     private boolean rendererSet = false;
 
+    private EGLClockRenderer mRenderer;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +64,10 @@ public class EGLClockActivity extends Activity {
             glSurfaceView.setEGLContextClientVersion(2);            
             
             // Assign our renderer.
+            mRenderer = new  EGLClockRenderer(this);
             glSurfaceView.setRenderer(new EGLClockRenderer(this));
 
-            //MG: glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+         //  glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
             rendererSet = true;
         } else {
@@ -96,28 +99,31 @@ public class EGLClockActivity extends Activity {
         if (rendererSet) {
             glSurfaceView.onPause();
         }
-        //MG: Pause TimeListener
-       // if(TimeChangeReceiver!=null)
-       //     this.unregisterReceiver(TimeChangeReceiver);
+        // MG: Pause TimeListener
+        if(TimeChangeReceiver!=null)
+         this.unregisterReceiver(TimeChangeReceiver);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         //MG: Register TimeListener
-        // this.registerReceiver(TimeChangeReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
-        if (rendererSet) {
+         this.registerReceiver(TimeChangeReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
+         if (rendererSet) {
             glSurfaceView.onResume();
         }
     }
 
     //MG: Time Listener Action
-   /* private BroadcastReceiver TimeChangeReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver TimeChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().compareTo(Intent.ACTION_TIME_TICK)==0)
             {
+
+                float cHour = mRenderer.getHourAngle();
+                float cMinutes = mRenderer.getMinAngle();
+                float cSeconds = mRenderer.getSecAngle();
 
                 Calendar calendar = new GregorianCalendar();
                 Date trialTime = new Date();
@@ -128,14 +134,18 @@ public class EGLClockActivity extends Activity {
 
                 float mMinutes;
                 float mHour;
+                float mSeconds;
                 mMinutes = minute + second / 60.0f;
                 mHour = hour + mMinutes / 60.0f;
+                mSeconds = second;
 
-                Log.d("EGL:", " mHour:" + mHour + " mMinutes:" + mMinutes);
                 if (rendererSet) {
-                    glSurfaceView.requestRender();
+                    mRenderer.setHourAngle(mHour - cHour);
+                    mRenderer.setMinAngle(mMinutes - cMinutes);
+                    mRenderer.setMinAngle(mSeconds - cSeconds);
+                   glSurfaceView.requestRender();
                 }
             }
         }
-    };*/
+    };
 }
