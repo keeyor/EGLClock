@@ -8,11 +8,11 @@
         "source": "C:\\Users\\Keeyor\\AndroidStudioProjects\\EGLClock\\app\\src\\main\\res\\raw\\texture_vertex_shader.glsl"
     },
     {
-        "merged": "C:\\Users\\Keeyor\\AndroidStudioProjects\\EGLClock\\app\\build\\intermediates\\res\\merged\\debug\\raw\\texture_fragment_shader.glsl",
-        "source": "C:\\Users\\Keeyor\\AndroidStudioProjects\\EGLClock\\app\\src\\main\\res\\raw\\texture_fragment_shader.glsl"
-    },
-    {
         "merged": "C:\\Users\\Keeyor\\AndroidStudioProjects\\EGLClock\\app\\build\\intermediates\\res\\merged\\debug\\raw\\simple_vertex_shader.glsl",
         "source": "C:\\Users\\Keeyor\\AndroidStudioProjects\\EGLClock\\app\\src\\main\\res\\raw\\simple_vertex_shader.glsl"
+    },
+    {
+        "merged": "C:\\Users\\Keeyor\\AndroidStudioProjects\\EGLClock\\app\\build\\intermediates\\res\\merged\\debug\\raw\\texture_fragment_shader.glsl",
+        "source": "C:\\Users\\Keeyor\\AndroidStudioProjects\\EGLClock\\app\\src\\main\\res\\raw\\texture_fragment_shader.glsl"
     }
 ]

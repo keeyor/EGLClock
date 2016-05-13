@@ -67,7 +67,7 @@ public class EGLClockActivity extends Activity {
             mRenderer = new  EGLClockRenderer(this);
             glSurfaceView.setRenderer(new EGLClockRenderer(this));
 
-         //  glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+          glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
             rendererSet = true;
         } else {
@@ -100,15 +100,15 @@ public class EGLClockActivity extends Activity {
             glSurfaceView.onPause();
         }
         // MG: Pause TimeListener
-        if(TimeChangeReceiver!=null)
-         this.unregisterReceiver(TimeChangeReceiver);
+         if(TimeChangeReceiver!=null)
+          this.unregisterReceiver(TimeChangeReceiver);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         //MG: Register TimeListener
-         this.registerReceiver(TimeChangeReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
+          this.registerReceiver(TimeChangeReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
          if (rendererSet) {
             glSurfaceView.onResume();
         }
@@ -142,8 +142,8 @@ public class EGLClockActivity extends Activity {
                 if (rendererSet) {
                     mRenderer.setHourAngle(mHour - cHour);
                     mRenderer.setMinAngle(mMinutes - cMinutes);
-                    mRenderer.setMinAngle(mSeconds - cSeconds);
-                   glSurfaceView.requestRender();
+                    mRenderer.setSecAngle(mSeconds - cSeconds);
+                    glSurfaceView.requestRender();
                 }
             }
         }

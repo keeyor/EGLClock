@@ -9,31 +9,17 @@
 package com.ephstrophy.eglckock;
 
 import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
-import static android.opengl.GLES20.GL_FLOAT;
-import static android.opengl.GLES20.GL_LINES;
-import static android.opengl.GLES20.GL_POINTS;
-import static android.opengl.GLES20.GL_TRIANGLES;
 import static android.opengl.GLES20.glClear;
 import static android.opengl.GLES20.glClearColor;
-import static android.opengl.GLES20.glDrawArrays;
-import static android.opengl.GLES20.glEnableVertexAttribArray;
-import static android.opengl.GLES20.glGetAttribLocation;
-import static android.opengl.GLES20.glGetUniformLocation;
-import static android.opengl.GLES20.glUniform4f;
 import static android.opengl.GLES20.glUniformMatrix4fv;
-import static android.opengl.GLES20.glUseProgram;
 import static android.opengl.GLES20.glVertexAttribPointer;
 import static android.opengl.GLES20.glViewport;
 import static android.opengl.Matrix.multiplyMM;
-import static android.opengl.Matrix.orthoM;
 import static android.opengl.Matrix.rotateM;
 import static android.opengl.Matrix.setIdentityM;
 import static android.opengl.Matrix.setLookAtM;
 import static android.opengl.Matrix.translateM;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -43,8 +29,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView.Renderer;
-import android.opengl.Matrix;
-import android.util.Log;
 
 import com.ephstrophy.eglckock.objects.Clock;
 import com.ephstrophy.eglckock.objects.Mallet;
@@ -52,12 +36,10 @@ import com.ephstrophy.eglckock.objects.Mpointer;
 import com.ephstrophy.eglckock.objects.Pointer;
 import com.ephstrophy.eglckock.objects.Puck;
 import com.ephstrophy.eglckock.objects.Spointer;
+import com.ephstrophy.eglckock.objects.Table;
 import com.ephstrophy.eglckock.programs.ColorShaderProgram;
 import com.ephstrophy.eglckock.programs.TextureShaderProgram;
-import com.ephstrophy.eglckock.util.LoggerConfig;
 import com.ephstrophy.eglckock.util.MatrixHelper;
-import com.ephstrophy.eglckock.util.ShaderHelper;
-import com.ephstrophy.eglckock.util.TextResourceReader;
 import com.ephstrophy.eglckock.util.TextureHelper;
 
 public class EGLClockRenderer implements Renderer {
@@ -68,6 +50,7 @@ public class EGLClockRenderer implements Renderer {
 
     private final float[] viewMatrix = new float[16];
     private final float[] viewProjectionMatrix = new float[16];
+    private final float[] modelViewProjectionMatrix = new float[16];
     private final float[] modelHourViewProjectionMatrix = new float[16];
     private final float[] modelMinutesViewProjectionMatrix = new float[16];
     private final float[] modelSecondViewProjectionMatrix = new float[16];
@@ -76,6 +59,9 @@ public class EGLClockRenderer implements Renderer {
     private Pointer hPointer;
     private Mpointer mPointer;
     private Spointer sPointer;
+    private Table table;
+
+    private Puck puck;
 
     private Mallet mallet;
     private TextureShaderProgram textureProgram;
@@ -98,11 +84,17 @@ public class EGLClockRenderer implements Renderer {
     public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
 
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+        table = new Table();
+
         clock = new Clock();
-        mallet = new Mallet();
+
         hPointer = new Pointer();
         mPointer = new Mpointer();
         sPointer = new Spointer();
+
+        mallet = new Mallet(0.08f, 0.15f, 32);
+        puck = new Puck(0.06f, 0.02f, 32);
 
 
         textureProgram = new TextureShaderProgram(context);
@@ -143,20 +135,11 @@ public class EGLClockRenderer implements Renderer {
         // Set the OpenGL viewport to fill the entire surface.
         glViewport(0, 0, width, height);
 
-        MatrixHelper.perspectiveM(projectionMatrix, 45, (float) width
+        MatrixHelper.perspectiveM(projectionMatrix, 40, (float) width
                 / (float) height, 1f, 10f);
 
-/*
-        setIdentityM(modelMatrix, 0);
-        translateM(modelMatrix, 0, 0f, 0f, -2.5f);
-        rotateM(modelMatrix, 0, 0f, 1f, 0f, 0f); // rotateM(modelMatrix, 0, -45f, 1f, 0f, 0f);
-        final float[] temp = new float[16];
-        multiplyMM(temp, 0, projectionMatrix, 0, modelMatrix, 0);
-        System.arraycopy(temp, 0, projectionMatrix, 0, temp.length);
-*/
-
-      // setLookAtM(viewMatrix, 0, 0f, 0f,3f, 0f, 0f, 0f, 0f, 1f, 0f);
-         setLookAtM(viewMatrix, 0, 0, 0, 3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+       setLookAtM(viewMatrix, 0, 0, 0, 3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+       // setLookAtM(viewMatrix, 0, 0f, 1.2f, 2.2f, 0f, 0f, 0f, 0f, 1f, 0f);
     }
 
     /**
@@ -169,7 +152,7 @@ public class EGLClockRenderer implements Renderer {
         glClear(GL_COLOR_BUFFER_BIT);
         multiplyMM(viewProjectionMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
 
-        Calendar calendar = new GregorianCalendar();
+       Calendar calendar = new GregorianCalendar();
         Date trialTime = new Date();
         calendar.setTime(trialTime);
         long hour = calendar.get(Calendar.HOUR);
@@ -181,44 +164,80 @@ public class EGLClockRenderer implements Renderer {
         mMinutes = minute + second / 60.0f;
         mHour = hour + mMinutes / 60.0f;
 
+
+
+        //positionTableInScene();
+        //textureProgram.useProgram();
+        //textureProgram.setUniforms(modelViewProjectionMatrix, texture);
+        //table.bindData(textureProgram);
+        //table.draw();
+
+        // Draw the mallets.
+       // positionObjectInScene(0f, mallet.height / 2f, -0.4f);
+        //colorProgram.useProgram();
+        //colorProgram.setUniforms(modelViewProjectionMatrix, 1f, 0f, 0f);
+       // mallet.bindData(colorProgram);
+       //  mallet.draw();
+
+
+        //positionObjectInScene(0f, mallet.height / 2f, 0.4f);
+       // colorProgram.setUniforms(modelViewProjectionMatrix, 0f, 0f, 1f);
+        // Note that we don't have to define the object data twice -- we just
+        // draw the same mallet again but in a different position and with a
+        // different color.
+        //mallet.draw();
+
+        // Draw the puck.
+       //positionObjectInScene(0f, puck.height / 2f, 0f);
+       // colorProgram.setUniforms(viewProjectionMatrix, 0.8f, 0.8f, 1f);
+       // puck.bindData(colorProgram);
+       // puck.draw();
+
+        // Draw the Clock
+        //textureProgram.setUniforms(modelViewProjectionMatrix, texture);
+        //clock.bindData(textureProgram);
+        //clock.draw();
+        colorProgram.useProgram();
+        colorProgram.setUniforms(viewProjectionMatrix, 1f, 1f, 1f);
+        clock.bindData(colorProgram);
+        clock.draw();
+
         float hTransform =  getHourAngle() / 12.0f * 360.0f;
 
         positionHourPointerInScene(hTransform);
-        textureProgram.useProgram();
-        textureProgram.setUniforms(modelHourViewProjectionMatrix, texture);
-        hPointer.bindData(textureProgram);
+        //textureProgram.useProgram();
+        //textureProgram.setUniforms(modelHourViewProjectionMatrix, texture);
+        colorProgram.useProgram();
+        colorProgram.setUniforms(modelHourViewProjectionMatrix, 0f, 1f, 0f);
+        hPointer.bindData(colorProgram);
         hPointer.draw();
 
         float mTransform =  getMinAngle() / 60.0f * 360.0f;
 
         positionMinutePointerInScene(mTransform);
-        textureProgram.setUniforms(modelMinutesViewProjectionMatrix, texture);
-        mPointer.bindData(textureProgram);
+        colorProgram.setUniforms(modelMinutesViewProjectionMatrix,1f, 0f, 0f);
+        mPointer.bindData(colorProgram);
         mPointer.draw();
 
         float sTransform =  getSecAngle() / 60.0f * 360.0f;
 
-        positionSecondPointerInScene(sTransform);
-        textureProgram.setUniforms(modelSecondViewProjectionMatrix, texture);
-        mPointer.bindData(textureProgram);
-        mPointer.draw();
+        // positionSecondPointerInScene(sTransform);
+         //colorProgram.setUniforms(modelSecondViewProjectionMatrix,0f, 1f, 1f);
+        // sPointer.bindData(colorProgram);
+        // sPointer.draw();
 
+         setHourAngle(mHour);
+         setMinAngle(mMinutes);
+         setSecAngle(second);
+    }
 
-        // Draw the Clock
-        textureProgram.setUniforms(viewProjectionMatrix, texture);
-        clock.bindData(textureProgram);
-        clock.draw();
-
-
-
-        colorProgram.useProgram();
-        colorProgram.setUniforms(viewProjectionMatrix);
-        mallet.bindData(colorProgram);
-        mallet.draw();
-
-        setHourAngle(mHour);
-        setMinAngle(mMinutes);
-        setSecAngle(second);
+    private void positionTableInScene() {
+    // The table is defined in terms of X & Y coordinates, so we rotate it
+    // 90 degrees to lie flat on the XZ plane.
+        setIdentityM(modelMatrix, 0);
+        rotateM(modelMatrix, 0, -90f, 1f, 0f, 0f);
+        multiplyMM(modelViewProjectionMatrix, 0, viewProjectionMatrix,
+                0, modelMatrix, 0);
     }
 
    private void positionHourPointerInScene(float hTransform) {
@@ -248,6 +267,13 @@ public class EGLClockRenderer implements Renderer {
     }
     public float getHourAngle() {
         return hourAngle;
+    }
+
+    private void positionObjectInScene(float x, float y, float z) {
+        setIdentityM(modelMatrix, 0);
+        translateM(modelMatrix, 0, x, y, z);
+        multiplyMM(modelViewProjectionMatrix, 0, viewProjectionMatrix,
+                0, modelMatrix, 0);
     }
 
     public void setHourAngle(float hourAngle) {

@@ -6,6 +6,7 @@ package com.ephstrophy.eglckock.objects;
 import android.util.Log;
 
 import com.ephstrophy.eglckock.data.VertexArray;
+import com.ephstrophy.eglckock.programs.ColorShaderProgram;
 import com.ephstrophy.eglckock.programs.TextureShaderProgram;
 
 import static android.opengl.GLES20.GL_POINTS;
@@ -102,191 +103,191 @@ public class Clock {
 
 
             // Triangle 12-1
-            - 0.01f, 0.4f,      1f, 1f,
-              0.01f, 0.5f,        1f, 1f,
-             -0.01f, 0.5f,       1f, 1f,
+            - 0.01f, 0.4f,      
+              0.01f, 0.5f,        
+             -0.01f, 0.5f,       
 
             // Triangle 12-2
-            - 0.01f, 0.4f,  1f, 1f,
-            0.01f, 0.4f,    1f, 1f,
-            0.01f, 0.5f,    1f, 1f,
+            - 0.01f, 0.4f,  
+            0.01f, 0.4f,    
+            0.01f, 0.5f,    
 
             // Triangle 3-1
-            0.4f, 0.01f,    1f, 1f,
-            0.5f, -0.01f,   1f, 1f,
-            0.5f, 0.01f,    1f, 1f,
+            0.4f, 0.01f,    
+            0.5f, -0.01f,   
+            0.5f, 0.01f,    
 
             // Triangle 3-2
-            0.4f, 0.01f, 1f, 1f,
-            0.5f, -0.01f, 1f, 1f,
-            0.4f, -0.01f, 1f, 1f,
+            0.4f, 0.01f,
+            0.5f, -0.01f,
+            0.4f, -0.01f,
 
             // Triangle 6-1
-            -0.01f, -0.5f, 1f, 1f,
-            0.01f, -0.4f, 1f, 1f,
-            -0.01f, -0.4f, 1f, 1f,
+            -0.01f, -0.5f, 
+            0.01f, -0.4f, 
+            -0.01f, -0.4f, 
 
             // Triangle 6-2
-            -0.01f, -0.5f, 1f, 1f,
-            0.01f, -0.5f, 1f, 1f,
-            0.01f, -0.4f, 1f, 1f,
+            -0.01f, -0.5f, 
+            0.01f, -0.5f, 
+            0.01f, -0.4f, 
 
             // Triangle 9-1
-            -0.5f, -0.01f, 1f, 1f,
-            -0.4f, 0.01f, 1f, 1f,
-            -0.5f, 0.01f, 1f, 1f,
+            -0.5f, -0.01f,
+            -0.4f, 0.01f,
+            -0.5f, 0.01f,
 
             // Triangle 9-2
-            -0.5f, -0.01f, 1f, 1f,
-            -0.4f, -0.01f, 1f, 1f,
-            -0.4f, 0.01f, 1f, 1f,
+            -0.5f, -0.01f,
+            -0.4f, -0.01f,
+            -0.4f, 0.01f,
 
-            x30_1, y30_1, 1f, 1f,
-            x30_2, y30_2, 1f, 1f,
-            x30_3, y30_3, 1f, 1f,
+            x30_1, y30_1, 
+            x30_2, y30_2, 
+            x30_3, y30_3, 
 
-            x30_1, y30_1, 1f, 1f,
-            x30_3, y30_3, 1f, 1f,
-            x30_4, y30_4, 1f, 1f,
+            x30_1, y30_1, 
+            x30_3, y30_3, 
+            x30_4, y30_4, 
 
-            -x30_1, y30_1, 1f, 1f,
-            -x30_2, y30_2, 1f, 1f,
-            -x30_3, y30_3, 1f, 1f,
+            -x30_1, y30_1, 
+            -x30_2, y30_2, 
+            -x30_3, y30_3, 
 
-            -x30_1, y30_1, 1f, 1f,
-            -x30_3, y30_3, 1f, 1f,
-            -x30_4, y30_4, 1f, 1f,
+            -x30_1, y30_1, 
+            -x30_3, y30_3, 
+            -x30_4, y30_4, 
 
-            x30_1, -y30_1, 1f, 1f,
-            x30_2, -y30_2, 1f, 1f,
-            x30_3, -y30_3, 1f, 1f,
+            x30_1, -y30_1, 
+            x30_2, -y30_2, 
+            x30_3, -y30_3, 
 
-            x30_1, -y30_1, 1f, 1f,
-            x30_3, -y30_3, 1f, 1f,
-            x30_4, -y30_4, 1f, 1f,
+            x30_1, -y30_1, 
+            x30_3, -y30_3, 
+            x30_4, -y30_4, 
 
-            -x30_1, -y30_1, 1f, 1f,
-            -x30_2, -y30_2, 1f, 1f,
-            -x30_3, -y30_3, 1f, 1f,
+            -x30_1, -y30_1, 
+            -x30_2, -y30_2, 
+            -x30_3, -y30_3, 
 
-            -x30_1, -y30_1, 1f, 1f,
-            -x30_3, -y30_3, 1f, 1f,
-            -x30_4, -y30_4, 1f, 1f,
+            -x30_1, -y30_1, 
+            -x30_3, -y30_3, 
+            -x30_4, -y30_4, 
 
-            x60_1, y60_1, 1f, 1f,
-            x60_2, y60_2, 1f, 1f,
-            x60_3, y60_3, 1f, 1f,
+            x60_1, y60_1, 
+            x60_2, y60_2, 
+            x60_3, y60_3, 
 
-            x60_1, y60_1, 1f, 1f,
-            x60_3, y60_3, 1f, 1f,
-            x60_4, y60_4, 1f, 1f,
+            x60_1, y60_1, 
+            x60_3, y60_3, 
+            x60_4, y60_4, 
 
-            -x60_1, y60_1, 1f, 1f,
-            -x60_2, y60_2, 1f, 1f,
-            -x60_3, y60_3, 1f, 1f,
+            -x60_1, y60_1, 
+            -x60_2, y60_2, 
+            -x60_3, y60_3, 
 
-            -x60_1, y60_1, 1f, 1f,
-            -x60_3, y60_3, 1f, 1f,
-            -x60_4, y60_4, 1f, 1f,
+            -x60_1, y60_1, 
+            -x60_3, y60_3, 
+            -x60_4, y60_4, 
 
-            x60_1, -y60_1, 1f, 1f,
-            x60_2, -y60_2, 1f, 1f,
-            x60_3, -y60_3, 1f, 1f,
+            x60_1, -y60_1, 
+            x60_2, -y60_2, 
+            x60_3, -y60_3, 
 
-            x60_1, -y60_1, 1f, 1f,
-            x60_3, -y60_3, 1f, 1f,
-            x60_4, -y60_4, 1f, 1f,
+            x60_1, -y60_1, 
+            x60_3, -y60_3, 
+            x60_4, -y60_4, 
 
-            -x60_1, -y60_1, 1f, 1f,
-            -x60_2, -y60_2, 1f, 1f,
-            -x60_3, -y60_3, 1f, 1f,
+            -x60_1, -y60_1, 
+            -x60_2, -y60_2, 
+            -x60_3, -y60_3, 
 
-            -x60_1, -y60_1, 1f, 1f,
-            -x60_3, -y60_3, 1f, 1f,
-            -x60_4, -y60_4, 1f, 1f,
+            -x60_1, -y60_1, 
+            -x60_3, -y60_3, 
+            -x60_4, -y60_4, 
 
             //Minutes dots
-            0.7f, 0f,   1f,   1f,
-            -0.7f, 0f, 1f, 1f,
-            0, 0.7f, 1f, 1f,
-            0, -0.7f, 1f, 1f,
+            0.7f, 0f,
+            -0.7f, 0f,
+            0, 0.7f,
+            0, -0.7f,
 
-            x1_line, y1_line, 1f, 1f,
-            -x1_line, y1_line, 1f, 1f,
-            x1_line, -y1_line, 1f, 1f,
-            -x1_line, -y1_line, 1f, 1f,
+            x1_line, y1_line,
+            -x1_line, y1_line,
+            x1_line, -y1_line,
+            -x1_line, -y1_line,
 
-            x2_line, y2_line, 1f, 1f,
-            -x2_line, y2_line, 1f, 1f,
-            x2_line, -y2_line, 1f, 1f,
-            -x2_line, -y2_line, 1f, 1f,
+            x2_line, y2_line, 
+            -x2_line, y2_line, 
+            x2_line, -y2_line, 
+            -x2_line, -y2_line, 
 
-            x3_line, y3_line, 1f, 1f,
-            -x3_line, y3_line, 1f, 1f,
-            x3_line, -y3_line, 1f, 1f,
-            -x3_line, -y3_line, 1f, 1f,
+            x3_line, y3_line, 
+            -x3_line, y3_line, 
+            x3_line, -y3_line, 
+            -x3_line, -y3_line, 
 
-            x4_line, y4_line, 1f, 1f,
-            -x4_line, y4_line, 1f, 1f,
-            x4_line, -y4_line, 1f, 1f,
-            -x4_line, -y4_line, 1f, 1f,
+            x4_line, y4_line, 
+            -x4_line, y4_line, 
+            x4_line, -y4_line, 
+            -x4_line, -y4_line, 
 
-            x5_line, y5_line, 1f, 1f,
-            -x5_line, y5_line, 1f, 1f,
-            x5_line, -y5_line, 1f, 1f,
-            -x5_line, -y5_line, 1f, 1f,
+            x5_line, y5_line, 
+            -x5_line, y5_line, 
+            x5_line, -y5_line, 
+            -x5_line, -y5_line, 
 
-            x6_line, y6_line, 1f, 1f,
-            -x6_line, y6_line, 1f, 1f,
-            x6_line, -y6_line, 1f, 1f,
-            -x6_line, -y6_line, 1f, 1f,
+            x6_line, y6_line, 
+            -x6_line, y6_line, 
+            x6_line, -y6_line, 
+            -x6_line, -y6_line, 
 
-            x7_line, y7_line, 1f, 1f,
-            -x7_line, y7_line, 1f, 1f,
-            x7_line, -y7_line, 1f, 1f,
-            -x7_line, -y7_line, 1f, 1f,
+            x7_line, y7_line, 
+            -x7_line, y7_line, 
+            x7_line, -y7_line, 
+            -x7_line, -y7_line, 
 
-            x8_line, y8_line, 1f, 1f,
-            -x8_line, y8_line, 1f, 1f,
-            x8_line, -y8_line, 1f, 1f,
-            -x8_line, -y8_line, 1f, 1f,
+            x8_line, y8_line, 
+            -x8_line, y8_line, 
+            x8_line, -y8_line, 
+            -x8_line, -y8_line, 
 
-            x9_line, y9_line, 1f, 1f,
-            -x9_line, y9_line, 1f, 1f,
-            x9_line, -y9_line, 1f, 1f,
-            -x9_line, -y9_line, 1f, 1f,
+            x9_line, y9_line, 
+            -x9_line, y9_line, 
+            x9_line, -y9_line, 
+            -x9_line, -y9_line, 
 
-            x10_line, y10_line, 1f, 1f,
-            -x10_line, y10_line, 1f, 1f,
-            x10_line, -y10_line, 1f, 1f,
-            -x10_line, -y10_line, 1f, 1f,
+            x10_line, y10_line, 
+            -x10_line, y10_line, 
+            x10_line, -y10_line, 
+            -x10_line, -y10_line, 
 
-            x11_line, y11_line, 1f, 1f,
-            -x11_line, y11_line, 1f, 1f,
-            x11_line, -y11_line, 1f, 1f,
-            -x11_line, -y11_line, 1f, 1f,
+            x11_line, y11_line, 
+            -x11_line, y11_line, 
+            x11_line, -y11_line, 
+            -x11_line, -y11_line, 
 
-            x12_line, y12_line, 1f, 1f,
-            -x12_line, y12_line, 1f, 1f,
-            x12_line, -y12_line, 1f, 1f,
-            -x12_line, -y12_line, 1f, 1f,
+            x12_line, y12_line, 
+            -x12_line, y12_line, 
+            x12_line, -y12_line, 
+            -x12_line, -y12_line, 
 
-            x13_line, y13_line, 1f, 1f,
-            -x13_line, y13_line, 1f, 1f,
-            x13_line, -y13_line, 1f, 1f,
-            -x13_line, -y13_line, 1f, 1f,
+            x13_line, y13_line, 
+            -x13_line, y13_line, 
+            x13_line, -y13_line, 
+            -x13_line, -y13_line, 
 
-            x14_line, y14_line, 1f, 1f,
-            -x14_line, y14_line, 1f, 1f,
-            x14_line, -y14_line, 1f, 1f,
-            -x14_line, -y14_line, 1f, 1f
+            x14_line, y14_line, 
+            -x14_line, y14_line, 
+            x14_line, -y14_line, 
+            -x14_line, -y14_line
     };
     private final VertexArray vertexArray;
 
     public Clock() {
         vertexArray = new VertexArray(VERTEX_DATA);
     }
-    public void bindData(TextureShaderProgram textureProgram) {
+/*    public void bindData(TextureShaderProgram textureProgram) {
         vertexArray.setVertexAttribPointer(
                 0,
                 textureProgram.getPositionAttributeLocation(),
@@ -297,7 +298,12 @@ public class Clock {
                 textureProgram.getTextureCoordinatesAttributeLocation(),
                 TEXTURE_COORDINATES_COMPONENT_COUNT,
                 STRIDE);
-    }
+    }*/
+public void bindData(ColorShaderProgram colorProgram) {
+    vertexArray.setVertexAttribPointer(0,
+            colorProgram.getPositionAttributeLocation(),
+            POSITION_COMPONENT_COUNT, 0);
+}
     public void draw() {
         for (int i=0;i<=66;i+=6) {
             glDrawArrays(GL_TRIANGLES, i, 6);

@@ -9,5 +9,5 @@ void main()
 {                            
     v_TextureCoordinates = a_TextureCoordinates;	  
     gl_Position = u_Matrix * a_Position;
-    gl_PointSize = 3.0;
+    gl_PointSize = 1.0;
 }          

@@ -5,6 +5,7 @@ package com.ephstrophy.eglckock.objects;
  */
 
 import com.ephstrophy.eglckock.data.VertexArray;
+import com.ephstrophy.eglckock.programs.ColorShaderProgram;
 import com.ephstrophy.eglckock.programs.TextureShaderProgram;
 
 import static android.opengl.GLES20.GL_TRIANGLES;
@@ -27,21 +28,22 @@ public class Mpointer {
             // Order of coordinates: X, Y, S, T
             //Minutes Pointer
             // Triangle 12-1
-            -0.01f, -0.10f,     0f, 0f,
-            0.01f, 0.65f,      0f, 0f,
-            -0.01f, 0.65f,      0f, 0f,
+            -0.01f, -0.01f,
+            0.01f, -0.01f,
+            0.0f, 0.65f
 
-            // Triangle 12-2
-            -0.01f, -0.1f, 0f, 0f,
-            0.01f, 0.65f, 0f, 0f,
-            0.01f, -0.1f, 0f, 0f,
     };
     private final VertexArray vertexArray;
 
     public Mpointer() {
         vertexArray = new VertexArray(VERTEX_DATA);
     }
-    public void bindData(TextureShaderProgram textureProgram) {
+    public void bindData(ColorShaderProgram colorProgram) {
+        vertexArray.setVertexAttribPointer(0,
+                colorProgram.getPositionAttributeLocation(),
+                POSITION_COMPONENT_COUNT, 0);
+    }
+   /* public void bindData(TextureShaderProgram textureProgram) {
         vertexArray.setVertexAttribPointer(
                 0,
                 textureProgram.getPositionAttributeLocation(),
@@ -52,8 +54,8 @@ public class Mpointer {
                 textureProgram.getTextureCoordinatesAttributeLocation(),
                 TEXTURE_COORDINATES_COMPONENT_COUNT,
                 STRIDE);
-    }
+    }*/
     public void draw() {
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
     }
 }
